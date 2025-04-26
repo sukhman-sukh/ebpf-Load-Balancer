@@ -20,5 +20,12 @@ $(BPF_PROG): src/load_balancer.bpf.c
 	mkdir -p $(BUILD_DIR)
 	clang -target bpf -I$(LIBBPF_HEADERS) -I/usr/include/aarch64-linux-gnu -O2 -c $^ -o $(BUILD_DIR)/$(BPF_PROG)
 
+topology:
+	sudo ./scripts/testbed-setup.sh
+
+prune:
+	sudo ./scripts/testbed-prune.sh
+
 clean:
 	rm -r $(BUILD_DIR)/*
+	sudo ./scripts/testbed-prune.sh
